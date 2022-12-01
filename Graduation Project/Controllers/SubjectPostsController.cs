@@ -17,6 +17,7 @@ namespace Graduation_Project.Controllers
         {
             List<GetPost> p = postRepository.getPostsForSubject(id);
             ViewBag.subjectId = id;
+            ViewBag.user = User.Identity.Name;
             return View(p);
         }
 
@@ -46,13 +47,13 @@ namespace Graduation_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                post.StudentId = 1;
+                post.StudentId = 2;
                 post.GroupId = groupId;
                 post.LikeCounter = 0;
                 post.PostTime = DateTime.Now;
                 postRepository.Insert(post);
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index" , new {id= groupId} );
         }
     }
 }
