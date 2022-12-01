@@ -7,84 +7,90 @@
 <!-- =============================================Timeline========================================================== -->
         <div class="col-12 col-lg-9 pb-5">
             <div class="d-flex flex-column justify-content-center w-100 mx-auto" style="padding-top: 56px; max-width: 680px">
-                <!-- create post -->
-                <div class="bg-white p-3 mt-3 rounded border shadow">
-                    <!-- avatar -->
-                    <div class="d-flex" type="button">
-                        <div class="p-1">
-                            <img src="https://source.unsplash.com/collection/happy-people" alt="avatar image" class="rounded-circle me-2"
+                @if (User.IsInRole("Admin") == true)
+                {
+
+                    <!-- create post -->
+                    <div class="bg-white p-3 mt-3 rounded border shadow">
+                        <!-- avatar -->
+                        <div class="d-flex" type="button">
+                            <div class="p-1">
+                                <img src="https://source.unsplash.com/collection/happy-people" alt="avatar image" class="rounded-circle me-2"
                                  style="width: 38px; height: 38px; object-fit: cover" />
-                        </div>
-                        <input type="text" class="form-control rounded-pill border-0 bg-gray pointer" disabled
+                            </div>
+                            <input type="text" class="form-control rounded-pill border-0 bg-gray pointer" disabled
                                placeholder="What's on your mind ?" data-bs-toggle="modal" data-bs-target="#createModal" />
-                    </div>
-                    <!-- create modal -->
-                    <section class="post">
-                        <form asp-action="SaveInsert" asp-controller="HomePosts">
+                        </div>
 
-                            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true"
-                                 data-bs-backdrop="false">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <!-- head -->
-                                        <div class="modal-header align-items-center">
-                                            <h5 class="text-dark text-center w-100 m-0" id="exampleModalLabel">
-                                                Create Post
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <!-- body -->
-                                        <div class="modal-body">
-                                            <div class="my-1 p-1">
-                                                <div class="d-flex flex-column">
-                                                    <!-- name -->
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="p-2">
-                                                            <img src="https://source.unsplash.com/collection/happy-people" alt="avatar image"
-                                                                 class="rounded-circle" style=" width: 38px; height: 38px; object-fit: cover;" />
+                        <!-- create modal -->
+                        <section class="post">
+                            <form asp-action="SaveInsert" asp-controller="HomePosts">
+
+                                <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true"
+                                     data-bs-backdrop="false">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <!-- head -->
+                                            <div class="modal-header align-items-center">
+                                                <h5 class="text-dark text-center w-100 m-0" id="exampleModalLabel">
+                                                    Create Post
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <!-- body -->
+                                            <div class="modal-body">
+                                                <div class="my-1 p-1">
+                                                    <div class="d-flex flex-column">
+                                                        <!-- name -->
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="p-2">
+                                                                <img src="https://source.unsplash.com/collection/happy-people" alt="avatar image"
+                                                                     class="rounded-circle" style=" width: 38px; height: 38px; object-fit: cover;" />
+                                                            </div>
+                                                            <div>
+                                                                <p class="m-0 fw-bold">Mohamed</p>
+                                                            </div>
                                                         </div>
+                                                        <!-- Post Body -->
                                                         <div>
-                                                            <p class="m-0 fw-bold">Mohamed</p>
+                                                            <!-- text -->
+                                                            <textarea cols="30" rows="5" class="form-control border-0" id="add-post" name="Content"></textarea>
+                                                            <!-- Image -->
+                                                            <img class="img-fluid rounded" id="result" />
                                                         </div>
-                                                    </div>
-                                                    <!-- Post Body -->
-                                                    <div>
-                                                        <!-- text -->
-                                                        <textarea cols="30" rows="5" class="form-control border-0" id="add-post" name="Content"></textarea>
-                                                        <!-- Image -->
-                                                        <img class="img-fluid rounded" id="result" />
-                                                    </div>
-                                                    <!-- options -->
-                                                    <div class="d-flex justify-content-between border border-1 border-light rounded p-3 mt-3">
+                                                        <!-- options -->
+                                                        <div class="d-flex justify-content-between border border-1 border-light rounded p-3 mt-3">
 
-                                                        <p class="m-0 ">Add to your post</p>
+                                                            <p class="m-0 ">Add to your post</p>
 
-                                                        <div>
-                                                            <!-- image icon -->
-                                                            <div class="image-upload">
-                                                                <label for="files">
-                                                                    <i class="fas fa-images fs-5 text-success pointer mx-1"></i>
-                                                                </label>
-                                                                <input id="files" type="file" multiple="" accept="image/*" onchange="loadFile(event)" style="display:none" />
+                                                            <div>
+                                                                <!-- image icon -->
+                                                                <div class="image-upload">
+                                                                    <label for="files">
+                                                                        <i class="fas fa-images fs-5 text-success pointer mx-1"></i>
+                                                                    </label>
+                                                                    <input id="files" type="file" multiple="" accept="image/*" onchange="loadFile(event)" style="display:none" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- end -->
                                             </div>
-                                            <!-- end -->
-                                        </div>
-                                        <!-- footer -->
-                                        <div class="modal-footer">
-                                            <input type="submit" class="btn btn-primary w-100" />
+                                            <!-- footer -->
+                                            <div class="modal-footer">
+                                                <input type="submit" class="btn btn-primary w-100" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        </form>
-                    </section>
-                </div>
+                            </form>
+                        </section>
 
+
+                    </div>
+                }
                 <!-- posts -->
                 <!-- p 1 -->
                 @foreach(var item in Model)

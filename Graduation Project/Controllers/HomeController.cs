@@ -2,8 +2,10 @@
 ﻿using Graduation_Project.Models;
 using Graduation_Project.Repository;
 using Graduation_Project.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Principal;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace El_Tamayez.Controllers
@@ -16,7 +18,11 @@ namespace El_Tamayez.Controllers
         IRegisterRepositry RegisterRepositry;
         IHostingEnvironment hosting;
         IContactusRepositry contactusRepositry;
-        public HomeController(IContactusRepositry _contactusRepositry,IHostingEnvironment _hosting,IStudentRepositry _studentRepositry,IRegisterRepositry _registerRepositry ,ITeacherRepositry teacherRepositry,ISubjectRepositry _subjectRepositry)
+        private UserManager<Account> _UserManager;
+        private SignInManager<Account> _SignInManager;
+        CenterDBContext db;
+
+        public HomeController(IContactusRepositry _contactusRepositry,IHostingEnvironment _hosting,IStudentRepositry _studentRepositry,IRegisterRepositry _registerRepositry ,ITeacherRepositry teacherRepositry,ISubjectRepositry _subjectRepositry, UserManager<Account> _UserManager, SignInManager<Account> _SignInManager, CenterDBContext db)
         {
             studentRepositry = _studentRepositry;
             TeacherRepositry = teacherRepositry;
@@ -24,14 +30,45 @@ namespace El_Tamayez.Controllers
             RegisterRepositry = _registerRepositry;
             hosting = _hosting;
             contactusRepositry = _contactusRepositry;
+            this._UserManager = _UserManager;
+            this._SignInManager = _SignInManager;
+            this.db = db;
         }
-        [HttpGet]
+        //[HttpGet]
+        //public async Task<IActionResult> Index()
+        //{
+
+        //    // add static account admin
+        //    // username : adminfortest
+        //    // pasword : Admin123+
+            
+        //    if (ModelState.IsValid)
+        //    {
+        //        Account user = new()
+        //        {
+        //            UserName = "AdminForTest",
+        //            Email = "admin@gmail.com",
+                    
+        //        };
+        //        IdentityResult result = await _UserManager.CreateAsync(user, "Admin123+");
+        //        await _SignInManager.SignInAsync(user, false);
+        //        Graduation_Project.Models.Admin admin = new Graduation_Project.Models.Admin();
+        //        admin.Name = "Admin";
+        //        admin.AccountId = user.Id;
+
+        //        db.Admins.Add(admin);
+        //        db.SaveChanges();
+        //        return View();
+
+        //    }
+        //    return View();
+
+        //}
         public IActionResult Index()
         {
-
-           return View();
+            return View();
         }
-        
+
         public IActionResult GetSubect(int year)
         {
             List<Subject> sub = SubjectRepositry.GetAllSubjectsByYear(year);
@@ -51,10 +88,7 @@ namespace El_Tamayez.Controllers
             return PartialView("_Teacher", teacherSubjects);
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+       
         [HttpGet]
         public IActionResult Register()
         {
@@ -109,7 +143,7 @@ namespace El_Tamayez.Controllers
                 //};
                 RegisterRepositry.Insert(reg);
                 //studentRepositry.Insert(st);
-                 return RedirectToAction("Login");
+                 return RedirectToAction("Index","Home");
             }
             else
             {
@@ -118,10 +152,7 @@ namespace El_Tamayez.Controllers
     
         }
 
-        public IActionResult Logout()
-        {
-            return RedirectToAction("Login");
-        }
+        
         [HttpGet]
         public IActionResult ContactUs()
         {
