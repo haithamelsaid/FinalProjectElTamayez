@@ -28,26 +28,29 @@
     <!-- Navbar Start -->
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg bg-white navbar-info py-3 py-lg-0 px-lg-5">
-            <a href="index.html" class="navbar-brand ml-lg-3">
-                <h1 class="m-0 text-uppercase text-primary">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    El Tamayez
-                </h1>
-            </a>
+            @if(User.Identity.IsAuthenticated==true){
+
+                <a asp-action="Index" asp-controller="HomePosts" class="navbar-brand ml-lg-3">
+                    <h1 class="m-0 text-uppercase text-primary">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        El Tamayez
+                    </h1>
+                </a>
+            }else{
+                <a asp-action="Index" asp-controller="Home" class="navbar-brand ml-lg-3">
+                    <h1 class="m-0 text-uppercase text-primary">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        El Tamayez
+                    </h1>
+                </a>
+            }
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
                 <div class="navbar-nav mx-auto py-0">
-                    <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">
-                        <i class="fa-solid fa-house-chimney"></i>
-                        Home
-                    </a>
-                    <a asp-action="ContactUs" asp-controller="Home" class="nav-item nav-link">
-                        <i class="fa-solid fa-message"></i>
-                        Contact Us
-                    </a>
                     @*if(you don't authenticated)*@
+<<<<<<< HEAD
                     <a asp-action="Register" asp-controller="Home" class="nav-item nav-link">
                         <i class="fa-solid fa-address-card"></i>
                         Register
@@ -78,7 +81,61 @@
                         <i class="fa-solid fa-user"></i>
                         Logout
                     </a>
+=======
+                    @if (User.Identity.IsAuthenticated==false)
+                    {
+                        <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            Home
+                        </a>
+                        <a asp-action="ContactUs" asp-controller="Home" class="nav-item nav-link">
+                            <i class="fa-solid fa-message"></i>
+                            Contact Us
+                        </a>
+                        @*if(you don't authenticated)*@
+                        <a asp-action="Register" asp-controller="Home" class="nav-item nav-link">
+                            <i class="fa-solid fa-address-card"></i>
+                            Register
+                        </a>
+                        <a asp-action="Login" asp-controller="Login" class="nav-item nav-link">
+                            <i class="fa-solid fa-user"></i>
+                            Login
+                        </a>
+                    }else{
+                        
+                            <a asp-action="Index" asp-controller="HomePosts" class="nav-item nav-link active">
+                                <i class="fa-solid fa-house-chimney"></i>
+                                 Home
+                            </a>
+                        @*Comment For Now Only*@
+                        @if (User.IsInRole("Admin"))
+                        {
+>>>>>>> 8c56409fa0e4f167e405cbfbeb542a87caa8e7b9
 
+                            <a asp-area="Admin" asp-action="Index" asp-controller="Home" class="nav-item nav-link">
+                                <i class="fa-solid fa-user-tie"></i>
+
+                                Go To Dashboard
+                            </a>
+                        }
+                         else{
+                        <a asp-action="MyCourses" asp-controller="MyCourses" class="nav-item nav-link">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                                Subjects
+                            </a>
+                            <a asp-action="Index" asp-controller="Profile" class="nav-item nav-link">
+                                <i class="fa-solid fa-user-tie"></i>
+                                Profile
+                            </a>
+                         }
+                        
+
+                        <a asp-action="logout" asp-controller="Login" class="nav-item nav-link">
+                            <i class="fa-solid fa-user"></i>
+                            Logout
+                        </a>
+
+                    }
                   </div>
 
             </div>
@@ -87,13 +144,16 @@
     <!-- Navbar End -->
     @*if(you authenticated)*@
     <!-- Header Start -->
-    <div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px;">
-        <div class="container text-center my-5 py-5">
-            <h1 class="text-white mt-4 mb-4">Learn At El Tamayez</h1>
-            <h1 class="text-white display-1 mb-5">Educational Center</h1>
 
+        <div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px;">
+            <div class="container text-center my-5 py-5">
+    @if(User.Identity.IsAuthenticated==false){
+                <h1 class="text-white mt-4 mb-4">Learn At El Tamayez</h1>
+                <h1 class="text-white display-1 mb-5">Educational Center</h1>
+
+    }
+            </div>
         </div>
-    </div>
     <!-- Header End -->
 
     <div>

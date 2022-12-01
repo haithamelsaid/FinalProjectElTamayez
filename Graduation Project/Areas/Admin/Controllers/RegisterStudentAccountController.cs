@@ -45,6 +45,8 @@ namespace Graduation_Project.Areas.Admin.Controllers
 
                 };
                 IdentityResult result = await _UserManager.CreateAsync(account, registerAll.StudentRegisterVM.Password);
+                await _UserManager.AddToRoleAsync(account, "Student");
+
                 if (result.Succeeded)
                 {
                     await _SignInManager.SignInAsync(account, false);
