@@ -2,6 +2,7 @@ namespace Graduation_Project.Repository;
 using Graduation_Project.Models;
 using Graduation_Project.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 public class PostRepository : IPostRepository
 {
@@ -69,7 +70,7 @@ public class PostRepository : IPostRepository
                 postWithInfo.Add(p);
             }
 
-            else if(item.TeacherId != null)
+            else if (item.TeacherId != null)
             {
                 GetPost p = new GetPost();
                 p.PostMakerId = db.Teachers.Where(n => n.Id == item.TeacherId).Select(n => n.Id).FirstOrDefault();
@@ -97,5 +98,43 @@ public class PostRepository : IPostRepository
         return db.SaveChanges();
     }
 
+    public List<GetPost> getPostsForSubject(int id)
+    {
+        //@ get all posts for subject
+        List<Post> posts = db.Posts.Where(n => n.GroupId == id && n.AdminId == null).ToList();
+        // define posts which will be show at HomePost Page
+        List<GetPost> postWithInfo = new List<GetPost>();
+        // fill post with admin information
+        foreach (var item in posts)
+        {
+            GetPost p = new GetPost();
+            p.likes = item.LikeCounter;
+            p.PostDate = item.PostTime;
+            p.Content = item.Content;
+            if (item.StudentId != null)
+            {
+                Student s = db.Students.Where(n => n.Id == item.StudentId).SingleOrDefault();
+                p.PostMakerId = s.Id;
+                p.PostMakerName = s.FirstName + " " + s.LastName;
+                p.PostMakerImage = s.Picture;
+                postWithInfo.Add(p);
+            }
 
+            else if (item.TeacherId != null)
+            {
+                Teacher t = db.Teachers.Where(n => n.Id == item.TeacherId).SingleOrDefault();
+                p.PostMakerId = t.Id;
+                p.PostMakerName = t.FirstName + " " + t.LastName;
+                p.PostMakerImage = t.Picture;
+                postWithInfo.Add(p);
+            }
+        }
+        return postWithInfo;
+    }
+
+    public Post getPostById(int id)
+    {
+        Post p = db.Posts.Include(n => n.Comments).Include(n => n.Student).Include(n => n.Teacher).SingleOrDefault(n => n.Id == id);
+        return p;
+    }
 }

@@ -1,3 +1,5 @@
+using Graduation_Project.Models;
+
 namespace Graduation_Project.ViewModels;
 public class GetPost
 {
@@ -9,6 +11,6 @@ public class GetPost
     public string Content { get; set; }
     //public string Image { get; set; }
     public int likes { get; set; }
+    public List<Comment> comments { get; set; }
 
-    
 }

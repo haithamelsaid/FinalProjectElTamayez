@@ -12,27 +12,35 @@ namespace El_Tamayez.Controllers
         {
             postRepository = _postRepository;
         }
-        public IActionResult MyCourses()
+        
+        public IActionResult Index()
         {
             return View();
         }
-        public IActionResult MyGroup()
-        {
-            List<GetPost> posts = postRepository.GetPostWithOwner();
-            return View(posts);
-        }
+        #region changed at subject posts controller
+        //public IActionResult MyCourses()
+        //{
+        //    return View();
+        //}
 
-        public IActionResult SaveInsert(Post post)
-        {
-            if(ModelState.IsValid)
-            {
-                post.StudentId = 2;
-                post.GroupId = 2;
-                post.LikeCounter = 0;
-                post.PostTime = DateTime.Now;
-                postRepository.Insert(post);
-            }
-            return RedirectToAction(nameof(MyGroup));
-        }
+        //public IActionResult MyGroup()
+        //{
+        //    List<GetPost> posts = postRepository.GetPostWithOwner();
+        //    return View(posts);
+        //}
+
+        //public IActionResult SaveInsert(Post post)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //        post.StudentId = 2;
+        //        post.GroupId = 2;
+        //        post.LikeCounter = 0;
+        //        post.PostTime = DateTime.Now;
+        //        postRepository.Insert(post);
+        //    }
+        //    return RedirectToAction(nameof(MyGroup));
+        //}
+        #endregion
     }
 }

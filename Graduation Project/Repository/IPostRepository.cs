@@ -11,4 +11,6 @@ public interface IPostRepository
     List<GetPost> GetPostWithOwner();
     int DeletePost(int id);
     int Insert(Post post);
+    List<GetPost> getPostsForSubject(int id);
+    Post getPostById(int id);
 }
