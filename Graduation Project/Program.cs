@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CenterDBContext>
     (
         n => 
-    { n.UseSqlServer("Server=.;Database=finalDb;Trusted_Connection=True;"); }
+    { n.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=finalDb;Trusted_Connection=True;"); }
     );
 builder.Services.AddIdentity<Account,IdentityRole>().AddEntityFrameworkStores<CenterDBContext>();
 // Add services to the container.
@@ -27,7 +27,7 @@ builder.Services.AddScoped<IGroup, GroupRepository>();
 builder.Services.AddScoped<ISubject, SubjectRepository>();
 builder.Services.AddScoped<ITeacher, TeacherRepository>();
 builder.Services.AddScoped<IStudent,Graduation_Project.AdminRepository.StudentRepository >();
-
+builder.Services.AddScoped<IAssignStudentsGroup, AssignStudentsGroupRepository>();
     
 builder.Services.AddScoped<IPostRepository , PostRepository>();
 var app = builder.Build();

@@ -39,8 +39,7 @@ namespace Graduation_Project.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ContactUs> ContactUss { get; set; }
-
-         public DbSet<StudentSubjectGroupTeacher> StudentsSubjectsGroupsTeachers { get; set; }
+        public DbSet<StudentSubjectGroupTeacher> StudentsSubjectsGroupsTeachers { get; set; }
 
 
 

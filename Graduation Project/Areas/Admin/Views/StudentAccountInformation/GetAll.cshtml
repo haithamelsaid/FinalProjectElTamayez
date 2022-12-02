@@ -1,7 +1,7 @@
-﻿@model List<Subject>
+﻿@model StudentAccountInformationVModel
 
 
-
+<h2>Registered Students</h2>
 
 
 
@@ -13,10 +13,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title">
-                        <h1>All Subjects <small></small></h1>
+                        <h1>Student Account Information <small></small></h1>
                         <ol class="breadcrumb">
                             <li><a href="#"><i class="fa fa-home"></i></a></li>
-                            <li class="active">Subject</li>
+                            <li class="active">Student</li>
                         </ol>
                     </div>
                 </div>
@@ -27,9 +27,7 @@
                         <!-- Start .panel -->
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a asp-controller="Subject" asp-action="Add" class="btn btn-success">
-                                    Add Subject
-                                </a>
+                                All Registered Students
                             </h4>
                             <div class="panel-actions">
                                 <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
@@ -41,40 +39,33 @@
                                 <table id="basic-datatables" class="table table-bordered text-center">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Description</th>
-                                            <th>Year</th>
-                                            <th>Image</th>
-                                            <th>Actions</th>
-                                            
+                                            <th>FirstName</th>
+                                            <th>LastName</th>
+                                            <th>Password</th>
+                                            <th>User Name</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in Model.Students)
                                         {
-                                        <tr>
-                                                <td>@item.Name</td>
-                                                <td>@item.Description</td>
-                                                <td>@item.Year</td>
-                                                <td>
-                                                    <img src="~/images/@(item.Image)" class="img-thumbnail rounded mx-auto d-block" style="height :70px; width:100px" />
-                                                </td>
-                                                
-                                                <td>
-                                                    <a asp-controller="Subject" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary">
-                                                        Edit
-                                                    </a>
-                                                    <a asp-controller="Subject" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger">
-                                                        Delete
-                                                    </a>
-                                                </td>
-
-                                            </tr>
+                                             
+                                                <tr>
+                                                        <td>@item.FirstName</td>
+                                                        <td>@item.LastName</td>
+                                                        <td>@item.national_Id</td>
+                                                </tr>
                                         }
-                                        
-                                            
 
-                                        
+                                            @foreach(var i in Model.Accounts) 
+                                             {
+                                                 <tr>
+                                                    <td>@i.UserName</td>
+
+                                                 </tr>
+
+                                             } 
+                                       
+  
                                     </tbody>
                                 </table>
                             </div>

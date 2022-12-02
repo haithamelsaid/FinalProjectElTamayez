@@ -10,6 +10,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace El_Tamayez.Controllers
 {
+    
     public class HomeController : Controller
     {
         IStudentRepositry studentRepositry;
