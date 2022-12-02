@@ -25,9 +25,9 @@ namespace Graduation_Project.Repository
             throw new NotImplementedException();
         }
 
-        public Student GetStudentById(int id)
+        public Student GetStudentById(string id)
         {
-            return _centerDBContext.Students.FirstOrDefault(x => x.Id == id);
+            return _centerDBContext.Students.FirstOrDefault(x => x.AccountId == id);
         }
 
         public void Insert(Student Student)
@@ -40,12 +40,12 @@ namespace Graduation_Project.Repository
 
         }
 
-        public void Update(Student Newstudent,int id)
+        public void Update(Student Newstudent,string id)
         {
             if (Newstudent != null)
             {
                 
-                Student oldsts = _centerDBContext.Students.SingleOrDefault(x => x.Id == id);
+                Student oldsts = _centerDBContext.Students.SingleOrDefault(x => x.AccountId == id);
                 oldsts.FatherPhone = Newstudent.FatherPhone;
                 oldsts.Phone = Newstudent.Phone;
                 oldsts.FirstName= Newstudent.FirstName;
