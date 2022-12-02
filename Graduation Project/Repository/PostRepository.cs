@@ -112,6 +112,7 @@ public class PostRepository : IPostRepository
             p.PostDate = item.PostTime;
             p.Content = item.Content;
             p.PostId = item.Id;
+            p.Image = item.Picture;
             if (item.StudentId != null)
             {
                 Student s = db.Students.Where(n => n.Id == item.StudentId).SingleOrDefault();
@@ -137,5 +138,12 @@ public class PostRepository : IPostRepository
     {
         Post p = db.Posts.Include(n => n.Comments).Include(n => n.Student).Include(n => n.Teacher).SingleOrDefault(n => n.Id == id);
         return p;
+    }
+
+    public void incrementLikeCounter(Post p)
+    {
+        Post newpost = this.getPostById(p.Id);
+        newpost.LikeCounter++;
+        db.SaveChanges();
     }
 }

@@ -13,4 +13,5 @@ public interface IPostRepository
     int Insert(Post post);
     List<GetPost> getPostsForSubject(int id);
     Post getPostById(int id);
+    void incrementLikeCounter(Post p);
 }

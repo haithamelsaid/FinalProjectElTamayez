@@ -70,7 +70,7 @@
                                                                 <label for="files">
                                                                     <i class="fas fa-images fs-5 text-success pointer mx-1"></i>
                                                                 </label>
-                                                                <input id="files" type="file" multiple="" accept="image/*" onchange="loadFile(event)" style="display:none" />
+                                                                <input id="files" type="file" multiple="" accept="image/*" onchange="loadFile(event)" style="display:none" name="pic" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -145,8 +145,11 @@
                                 @item.Content
                             </p>
 
-                            <img class="img-fluid img-responsive rounded"
-                                 src="" id="showImage" />
+                                @if (@item.Image != null)
+                                {
+                                    <img class="img-fluid img-responsive rounded"
+                                 src="~/images/@item.Image" id="showImage" />
+                                }
                         </div>
                         <!-- likes & comments -->
                         <div class="post__comment mt-3 position-relative">

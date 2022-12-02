@@ -9,8 +9,8 @@ public class GetPost
     public int PostMakerId { get; set; }
     public DateTime PostDate { get; set; }
     public string Content { get; set; }
-    //public string Image { get; set; }
+    public string Image { get; set; }
     public int likes { get; set; }
     public List<Comment> comments { get; set; }
-
+    public IFormFile File { get; set; }
 }
