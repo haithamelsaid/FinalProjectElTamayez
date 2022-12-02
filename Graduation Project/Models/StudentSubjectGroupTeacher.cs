@@ -13,7 +13,7 @@ namespace Graduation_Project.Models
         public Subject? Subject { get; set; }
 
         [ForeignKey("Teacher")]
-        public int TeacherId { get; set; }
+        public int? TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
 
         [ForeignKey("Group")]

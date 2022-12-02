@@ -1,17 +1,11 @@
-﻿
-@model Student
+﻿@model TeacherVM
 <link href="~/Admin/css/bootstrap-wysihtml5.css" rel="stylesheet">
 
 <link href="~/Admin/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
 
 
-
-
-
-
-
-    
+   
 
 
     <div id="wrapper">
@@ -19,10 +13,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title">
-                        <h1>Edit Student<small></small></h1>
+                        <h1>Register Teacher<small></small></h1>
                         <ol class="breadcrumb">
                             <li><a href="#"><i class="fa fa-home"></i></a></li>
-                            <li class="active">Student</li>
+                            <li class="active">Teacher</li>
                         </ol>
                     </div>
                 </div>
@@ -41,8 +35,8 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                             <form class="form-horizontal" method="post" role="form" asp-controller="Teacher" asp-action="Add">
-                                <input asp-for="Id" type="hidden" />
+                            <form class="form-horizontal" method="post" role="form" asp-controller="Teacher" asp-action="Add">
+
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">First Name</label>
 
@@ -61,37 +55,50 @@
                                     <label class="col-lg-2 control-label">Description</label>
 
                                     <div class="col-lg-10">
-                                        <input asp-for="Phone" type="number" placeholder="Please enter Phone" class="form-control">
+                                        <input asp-for="Description" type="text" placeholder="Please enter Phone" class="form-control">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Year</label>
-
-                                    <div class="col-lg-10">
-                                        <select asp-for="Year" asp-items="Html.GetEnumSelectList<Year>()" class="form-control">
-                                                <option>--Select Year--</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Gender</label>
 
                                     <div class="col-lg-10">
-                                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<StudentGender>()" class="form-control">
-                                                <option>--Select Gender--</option>
+                                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<TeacherGender>()" class="form-control">
+                                            <option>--Select Gender--</option>
                                         </select>
+                                         
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">UserName</label>
+
+                                    <div class="col-lg-10">
+                                        <input asp-for="UserName" type="text" placeholder="Please enter UserName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Email</label>
+
+                                    <div class="col-lg-10">
+                                        <input asp-for="Email" type="email" placeholder="Please enter Email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">  Password</label>
+
+                                    <div class="col-lg-10">
+                                        <input asp-for="Password" type="password" placeholder="Please enter Password  " class="form-control">
                                     </div>
                                 </div>
 
-
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button asp-controller="Student" asp-action="Edit" class="btn btn-info">
-                                            Save
+                                        <button asp-controller="RegisterTeacherAccount" asp-action="Register" class="btn btn-info">
+                                            Create
                                         </button>
-                                        <button asp-controller="Student" asp-action="GetAllStudents" class="btn btn-danger">
+                                       @* <button asp-controller="Student" asp-action="GetAllStudents" class="btn btn-danger">
                                             Cancel
-                                        </button>
+                                        </button>*@
                                     </div>
                                 </div>
                             </form>

@@ -64,7 +64,7 @@ namespace Graduation_Project.Areas.Admin.Controllers
 
                     db.Students.Add(student);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("GetAll", "StudentAccountInformation");
 
                 }
                 else
