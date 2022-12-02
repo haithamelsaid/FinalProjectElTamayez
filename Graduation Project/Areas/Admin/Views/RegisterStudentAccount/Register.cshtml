@@ -115,7 +115,7 @@
                                     <label class="col-lg-2 control-label">  Password</label>
 
                                     <div class="col-lg-10">
-                                        <input asp-for="StudentRegisterVM.Password" type="password" placeholder="Please enter Password  " class="form-control">
+                                        <input asp-for="StudentRegisterVM.Password" type="text" value="@Model.register.national_Id$@Model.register.FirstName@Model.register.LastName" placeholder="Please enter Password  " class="form-control">
                                     </div>
                                 </div>
 
