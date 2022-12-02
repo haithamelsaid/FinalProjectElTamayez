@@ -151,17 +151,17 @@
                         <!-- likes & comments -->
                         <div class="post__comment mt-3 position-relative">
                             <!-- likes -->
-                            <div class="d-flex align-items-center top-0 start-0 position-absolute" style="height: 50px; z-index: 5">
+                           @* <div class="d-flex align-items-center top-0 start-0 position-absolute" style="height: 50px; z-index: 5">
                                 <div class="me-2">
                                     <i class="text-primary fas fa-thumbs-up"></i>
                                 </div>
                                 <p class="m-0 text-muted fs-7"> @item.likes likes</p>
-                            </div>
+                            </div>*@
                             <!-- comments start-->
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item border-0">
                                     <!-- comment collapse -->
-                                    <div class="accordion-header" id="headingTwo">
+                                    @*<div class="accordion-header" id="headingTwo">
                                         <div class="accordion-button collapsed pointer d-flex justify-content-end"
                                              data-bs-toggle="collapse"
                                              data-bs-target="#collapsePost1"
@@ -169,25 +169,21 @@
                                              aria-controls="collapsePost1">
                                             <p class="m-0">Comments</p>
                                         </div>
-                                    </div>
+                                    </div>*@
                                     <hr />
                                     <!-- comment & like bar -->
                                     <div class="d-flex justify-content-around">
-                                        <div class="dropdown-item rounded d-flex justify-content-center align-items-center pointer text-muted p-1">
+                                            @*<div class="dropdown-item rounded d-flex justify-content-center align-items-center pointer text-muted p-1">
                                             <i class="fas fa-thumbs-up me-3"></i>
                                             <p class="m-0">Like</p>
-                                        </div>
-                                        <div class="dropdown-item rounded d-flex justify-content-center align-items-center pointer text-muted p-1"
-                                             data-bs-toggle="collapse"
-                                             data-bs-target="#collapsePost1"
-                                             aria-expanded="false"
-                                             aria-controls="collapsePost1">
+                                        </div>*@
+                                            <a asp-action="PostContent" asp-controller="SubjectPosts" asp-route-id="@item.PostId" class="dropdown-item rounded d-flex justify-content-center align-items-center pointer text-muted p-1">
                                             <i class="fas fa-comment-alt me-3"></i>
                                             <p class="m-0">Comment</p>
-                                        </div>
+                                        </a>
                                     </div>
                                     <!-- comment expand -->
-                                    <div id="collapsePost1"
+                                    @*<div id="collapsePost1"
                                          class="accordion-collapse collapse"
                                          aria-labelledby="headingTwo"
                                          data-bs-parent="#accordionExample">
@@ -253,7 +249,7 @@
                                             </form>
                                             <!-- end -->
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <!-- end -->

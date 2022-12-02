@@ -8,9 +8,11 @@ namespace Graduation_Project.Controllers
     public class SubjectPostsController : Controller
     {
         IPostRepository postRepository;
-        public SubjectPostsController(IPostRepository postRepository)
+        ICommentRepository comment;
+        public SubjectPostsController(IPostRepository postRepository, ICommentRepository comment)
         {
             this.postRepository = postRepository;
+            this.comment = comment;
         }
 
         public IActionResult Index(int id)
@@ -54,6 +56,14 @@ namespace Graduation_Project.Controllers
                 postRepository.Insert(post);
             }
             return RedirectToAction("Index" , new {id= groupId} );
+        }
+
+        public IActionResult insertComment(Comment c)
+        {
+            c.StudentId = 2;
+            c.CommentTime = DateTime.Now;
+            comment.InsertComment(c);
+            return RedirectToAction(nameof(PostContent), new { id = c.postid });
         }
     }
 }

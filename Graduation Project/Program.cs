@@ -16,6 +16,7 @@ builder.Services.AddIdentity<Account,IdentityRole>().AddEntityFrameworkStores<Ce
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ISubjectRepositry, SubjectRepositry>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IStudentRepositry, StudentRepositry>();
 builder.Services.AddScoped<IRegisterRepositry, RegisterRepositry>();
 builder.Services.AddScoped<ITeacherRepositry, TeacherRepositry>();

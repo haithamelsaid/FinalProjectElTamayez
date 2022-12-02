@@ -111,6 +111,7 @@ public class PostRepository : IPostRepository
             p.likes = item.LikeCounter;
             p.PostDate = item.PostTime;
             p.Content = item.Content;
+            p.PostId = item.Id;
             if (item.StudentId != null)
             {
                 Student s = db.Students.Where(n => n.Id == item.StudentId).SingleOrDefault();

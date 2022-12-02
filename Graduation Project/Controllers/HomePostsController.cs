@@ -20,9 +20,10 @@ namespace Graduation_Project.Controllers
 
         public IActionResult SaveInsert(Post post)
         {
+            //will be changed by loged in admin id
             post.AdminId = 2;
             post.GroupId = 2;
-            post.LikeCounter = 10;
+            post.LikeCounter = 0;
             post.PostTime = DateTime.Now;
             postRepo.Insert(post);
             return RedirectToAction(nameof(Index));
