@@ -52,20 +52,12 @@
                                                 <tr>
                                                         <td>@item.FirstName</td>
                                                         <td>@item.LastName</td>
-                                                        <td>@item.national_Id</td>
+                                                        <td>@item.national_Id@@@item.FirstName.ToUpper()@item.LastName.ToLower()</td>
+                                                        <td>@item.Account.UserName</td>
+                                                            
                                                 </tr>
                                         }
-
-                                            @foreach(var i in Model.Accounts) 
-                                             {
-                                                 <tr>
-                                                    <td>@i.UserName</td>
-
-                                                 </tr>
-
-                                             } 
-                                       
-  
+                                        
                                     </tbody>
                                 </table>
                             </div>

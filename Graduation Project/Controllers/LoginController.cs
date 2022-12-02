@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Graduation_Project.Controllers
 {
     public class LoginController : Controller
-    { 
-
+    {
+        public static string UserName = "";
         private UserManager<Account> _UserManager;
         private SignInManager<Account> _SignInManager;
         CenterDBContext db;
@@ -19,6 +19,7 @@ namespace Graduation_Project.Controllers
             this._SignInManager = _SignInManager;
             this.db = db;
         }
+       
         public IActionResult Login()
         {
             return View();
@@ -28,6 +29,7 @@ namespace Graduation_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                UserName = loginVM.UserName;
                 Account account = await _UserManager.FindByNameAsync(loginVM.UserName);
 
 

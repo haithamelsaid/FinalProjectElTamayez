@@ -40,7 +40,7 @@ namespace Graduation_Project.Areas.Admin.Controllers
             {
                 Account account = new Account()
                 {
-                    UserName = registerAll.StudentRegisterVM.UserName,
+                    UserName = registerAll.StudentRegisterVM.UserName+ (Guid.NewGuid()).ToString().Substring(0,4),
                     Email = registerAll.StudentRegisterVM.Email,
 
                 };

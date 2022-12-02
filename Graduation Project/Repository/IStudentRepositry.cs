@@ -6,9 +6,9 @@ namespace Graduation_Project.Repository
     {
         List<Student> GetAllStudents();
         List<Student> GetAllStudentsByYear(int year);
-        Student GetStudentById(int id);
+        Student GetStudentById(string id);
         void Insert(Student Student);
-        void Update(Student Newstudent,int id);
+        void Update(Student Newstudent,string id);
         void Delete(int id);
     }
 }
