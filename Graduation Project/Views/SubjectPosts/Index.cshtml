@@ -160,41 +160,22 @@
 
                 <div class="p-1 mt-5">
 
-                    <h3 class="text-center">Group Name</h3>
-                    <h6 class="text-center">Description</h6>
+                    <h3 class="text-center">@ViewBag.groupname</h3>
+                    <h6 class="text-center">@ViewBag.groupdescription</h6>
                     <!-- =====Users====== -->
                     <!-- user1 -->
-                    <li class="dropdown-item rounded my-2 px-0" type="button">
+                    @foreach (var item in ViewBag.students)
+                    {
+                        <li class="dropdown-item rounded my-2 px-0" type="button">
                         <div class="d-flex align-items-center mx-2">
                             <div class="position-relative">
-                                <img src="https://source.unsplash.com/random/1" alt="avatar" class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover;" />
+                                    <img src="~/images/@item.Picture" alt="avatar" class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover;" />
 
                             </div>
-                            <h5 class="m-0">Mohamed Elsayed</h5>
+                                <h5 class="m-0">@item.FirstName @item.LastName</h5>
                         </div>
                     </li>
-                    <!-- user2 -->
-                    <li class="dropdown-item rounded my-2 px-0" type="button">
-                        <div class="d-flex align-items-center mx-2">
-                            <div class="position-relative">
-                                <img src="https://source.unsplash.com/random/2" alt="avatar" class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover;" />
-
-                            </div>
-                            <h5 class="m-0">Mohamed Elsayed</h5>
-                        </div>
-                    </li>
-                    <!-- user3 -->
-                    <li class="dropdown-item rounded my-2 px-0" type="button">
-                        <div class="d-flex align-items-center mx-2">
-                            <div class="position-relative">
-                                <img src="https://source.unsplash.com/random/3" alt="avatar" class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover;" />
-
-                            </div>
-                            <h5 class="m-0">Mohamed Elsayed</h5>
-                        </div>
-                    </li>
-
-
+                    }
                 </div>
 
             </div>

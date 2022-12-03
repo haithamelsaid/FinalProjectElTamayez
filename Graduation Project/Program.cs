@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CenterDBContext>
     (
         n => 
-    { n.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=finalDb;Trusted_Connection=True;"); }
+    { n.UseSqlServer("Server=.;Database=finalDb;Trusted_Connection=True;"); }
     );
 builder.Services.AddIdentity<Account,IdentityRole>().AddEntityFrameworkStores<CenterDBContext>();
 // Add services to the container.

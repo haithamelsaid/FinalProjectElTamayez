@@ -24,6 +24,10 @@ namespace Graduation_Project.Controllers
         {
             List<GetPost> p = postRepository.getPostsForSubject(id);
             ViewBag.subjectId = id;
+            List<Student> s = db.Students.Where(n => n.GroupId == id).ToList();
+            ViewBag.groupname =db.Groups.SingleOrDefault(n => n.Id == id).Name;
+            ViewBag.groupdescription = db.Groups.SingleOrDefault(n => n.Id == id).Description;
+            ViewBag.students = s;
             ViewBag.user = User.Identity.Name;
             return View(p);
         }

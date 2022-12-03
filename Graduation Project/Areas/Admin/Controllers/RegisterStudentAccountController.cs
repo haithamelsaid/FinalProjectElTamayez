@@ -60,8 +60,6 @@ namespace Graduation_Project.Areas.Admin.Controllers
                     student.national_Id = registerAll.register.national_Id;
                     student.birthday = registerAll.register.birthday;
                     student.AccountId = account.Id;
-
-
                     db.Students.Add(student);
                     db.SaveChanges();
                     return RedirectToAction("GetAll", "StudentAccountInformation");

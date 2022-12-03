@@ -29,7 +29,7 @@ namespace Graduation_Project.Controllers
         public IActionResult SaveInsert(Post post, int groupId, IFormFile pic)
         {
             //will be changed by loged in admin id
-            post.AdminId = 2;
+            post.AdminId = 1;
             post.GroupId = null;
             post.LikeCounter = 0;
             post.PostTime = DateTime.Now;
