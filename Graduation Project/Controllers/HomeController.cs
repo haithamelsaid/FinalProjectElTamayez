@@ -23,6 +23,10 @@ namespace El_Tamayez.Controllers
         private SignInManager<Account> _SignInManager;
         CenterDBContext db;
 
+        public HomeController()
+        {
+
+        }
         public HomeController(IContactusRepositry _contactusRepositry,IHostingEnvironment _hosting,IStudentRepositry _studentRepositry,IRegisterRepositry _registerRepositry ,ITeacherRepositry teacherRepositry,ISubjectRepositry _subjectRepositry, UserManager<Account> _UserManager, SignInManager<Account> _SignInManager, CenterDBContext db)
         {
             studentRepositry = _studentRepositry;
