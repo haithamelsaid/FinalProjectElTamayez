@@ -4,6 +4,7 @@ using Graduation_Project.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Graduation_Project.Migrations
 {
     [DbContext(typeof(CenterDBContext))]
-    partial class CenterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221203162941_Update_Group_Model_Prop2")]
+    partial class Update_Group_Model_Prop2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,12 +142,17 @@ namespace Graduation_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AdminId");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
 
@@ -270,9 +277,6 @@ namespace Graduation_Project.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -300,8 +304,6 @@ namespace Graduation_Project.Migrations
 
                     b.HasIndex("AccountId")
                         .IsUnique();
-
-                    b.HasIndex("GroupId");
 
                     b.ToTable("Students");
                 });
@@ -646,9 +648,15 @@ namespace Graduation_Project.Migrations
                         .WithMany("Groups")
                         .HasForeignKey("AdminId");
 
+                    b.HasOne("Graduation_Project.Models.Student", "Student")
+                        .WithMany("Groups")
+                        .HasForeignKey("StudentId");
+
                     b.HasOne("Graduation_Project.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId");
+
+                    b.Navigation("Student");
 
                     b.Navigation("Subject");
                 });
@@ -688,13 +696,7 @@ namespace Graduation_Project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Graduation_Project.Models.Group", "Group")
-                        .WithMany("Students")
-                        .HasForeignKey("GroupId");
-
                     b.Navigation("Account");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Graduation_Project.Models.Subject", b =>
@@ -792,8 +794,6 @@ namespace Graduation_Project.Migrations
             modelBuilder.Entity("Graduation_Project.Models.Group", b =>
                 {
                     b.Navigation("Posts");
-
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("Graduation_Project.Models.Post", b =>
@@ -804,6 +804,8 @@ namespace Graduation_Project.Migrations
             modelBuilder.Entity("Graduation_Project.Models.Student", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Groups");
 
                     b.Navigation("Posts");
                 });

@@ -15,19 +15,19 @@ namespace Graduation_Project.Models
 
         }
        
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-                modelBuilder.Entity<StudentSubjectGroupTeacher>()
-                .HasKey("StudentId", "SubjectId", "TeacherId", "GroupId");
-            //modelBuilder.Entity<IdentityUserLogin>().HasNoKey();
-            //modelBuilder.Entity<IdentityUserLogin>(
-            //eb =>
-            //{
-            //    eb.HasNoKey();
-            //});
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //        modelBuilder.Entity<StudentSubjectGroupTeacher>()
+        //        .HasKey("StudentId", "SubjectId", "TeacherId", "GroupId");
+        //    //modelBuilder.Entity<IdentityUserLogin>().HasNoKey();
+        //    //modelBuilder.Entity<IdentityUserLogin>(
+        //    //eb =>
+        //    //{
+        //    //    eb.HasNoKey();
+        //    //});
+        //    base.OnModelCreating(modelBuilder);
 
-        }
+        //}
 
         public  DbSet<Account> Accounts { get; set; }
         public  DbSet<Admin> Admins { get; set; }
@@ -39,7 +39,7 @@ namespace Graduation_Project.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ContactUs> ContactUss { get; set; }
-        public DbSet<StudentSubjectGroupTeacher> StudentsSubjectsGroupsTeachers { get; set; }
+        //public DbSet<StudentSubjectGroupTeacher> StudentsSubjectsGroupsTeachers { get; set; }
 
 
 

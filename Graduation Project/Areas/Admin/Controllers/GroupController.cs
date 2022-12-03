@@ -1,15 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Graduation_Project.AdminRepository;
-using Graduation_Project.Models; 
+using Graduation_Project.Models;
+using Graduation_Project.ViewModels;
+using Graduation_Project.Areas.Admin.ViewModels;
 namespace Graduation_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class GroupController : Controller
     {
         IGroup igroup;
-        public GroupController(IGroup _igroup)
+        ISubject isubject;
+        public GroupController(IGroup _igroup, ISubject _isubject)
         {
             igroup = _igroup;
+            isubject = _isubject;
         }
         public IActionResult GetAllGroups()
         {
@@ -18,17 +22,30 @@ namespace Graduation_Project.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add() 
         {
-            return View();
+            List<Subject> subjects = isubject.GetAllSubjects();
+            AddGroupSubjectVM addGroupSubjectVM = new AddGroupSubjectVM()
+            {
+                Subjects = subjects
+            };
+            return View(addGroupSubjectVM);
         }
         [HttpPost]
-        public IActionResult Add(Group group)
+        public IActionResult Add(AddGroupSubjectVM addGroupSubjectVM)
         {
+            Group group = new Group();
             if (ModelState.IsValid == true) 
             {
+
+
+                group.Name = addGroupSubjectVM.Name;
+                group.CreationTime = addGroupSubjectVM.CreationTime;
+                group.Description = addGroupSubjectVM.Description;
+                group.SubjectId = addGroupSubjectVM.SubjectId;
+               
                 igroup.Add(group);
                 return RedirectToAction(nameof(GetAllGroups));
             }
-            return View(group);
+            return View(addGroupSubjectVM);
         }
         [HttpGet]
         public IActionResult Edit(int id)

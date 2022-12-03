@@ -8,10 +8,12 @@ namespace Graduation_Project.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreationTime { get; set; }
-        public virtual List<Post>? Posts{ get; set; }
+        public virtual List<Post>? Posts { get; set; }
+        public List<Student>? Students { get; set; }
+        [ForeignKey("Subject")]
+        public int? SubjectId { get; set; }
+        public Subject? Subject { get; set; }
 
-        [ForeignKey("Admin")]
-        public int? AdminId { get; set; }
-        public Admin? Admin { get; set; }
+        
     }
 }

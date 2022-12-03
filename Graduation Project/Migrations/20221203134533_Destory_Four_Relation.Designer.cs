@@ -4,6 +4,7 @@ using Graduation_Project.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Graduation_Project.Migrations
 {
     [DbContext(typeof(CenterDBContext))]
-    partial class CenterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221203134533_Destory_Four_Relation")]
+    partial class Destory_Four_Relation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,14 +142,15 @@ namespace Graduation_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubjectId")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AdminId");
 
-                    b.HasIndex("SubjectId");
+                    b.HasIndex("SubjectId")
+                        .IsUnique();
 
                     b.ToTable("Groups");
                 });
@@ -320,9 +323,6 @@ namespace Graduation_Project.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GrouId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
@@ -336,10 +336,6 @@ namespace Graduation_Project.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AdminId");
-
-                    b.HasIndex("GrouId")
-                        .IsUnique()
-                        .HasFilter("[GrouId] IS NOT NULL");
 
                     b.ToTable("Subjects");
                 });
@@ -647,8 +643,10 @@ namespace Graduation_Project.Migrations
                         .HasForeignKey("AdminId");
 
                     b.HasOne("Graduation_Project.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId");
+                        .WithOne("Group")
+                        .HasForeignKey("Graduation_Project.Models.Group", "SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Subject");
                 });
@@ -688,13 +686,11 @@ namespace Graduation_Project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Graduation_Project.Models.Group", "Group")
+                    b.HasOne("Graduation_Project.Models.Group", null)
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Account");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Graduation_Project.Models.Subject", b =>
@@ -702,12 +698,6 @@ namespace Graduation_Project.Migrations
                     b.HasOne("Graduation_Project.Models.Admin", null)
                         .WithMany("Subjects")
                         .HasForeignKey("AdminId");
-
-                    b.HasOne("Graduation_Project.Models.Group", "Group")
-                        .WithOne()
-                        .HasForeignKey("Graduation_Project.Models.Subject", "GrouId");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Graduation_Project.Models.Teacher", b =>
@@ -810,6 +800,9 @@ namespace Graduation_Project.Migrations
 
             modelBuilder.Entity("Graduation_Project.Models.Subject", b =>
                 {
+                    b.Navigation("Group")
+                        .IsRequired();
+
                     b.Navigation("Teachers");
                 });
 

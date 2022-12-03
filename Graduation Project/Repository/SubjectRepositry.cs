@@ -43,7 +43,7 @@ namespace Graduation_Project.Repository
             oldsubject.Name = Newsubject.Name;
             oldsubject.Description = Newsubject.Description;
             oldsubject.Year = Newsubject.Year;
-            oldsubject.AdminId = Newsubject.AdminId;
+            //oldsubject.AdminId = Newsubject.AdminId;
             _centerDBContext.SaveChanges();
 
         }

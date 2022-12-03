@@ -48,6 +48,10 @@ namespace Graduation_Project.Models
         [ForeignKey("Account")]
         public string AccountId { get; set; }
         public  Account Account { get; set; }
+
+        [ForeignKey("Group")]
+        public int? GroupId { get; set; }
+        public Group? Group { get; set; }
     }
     public enum Year
     {

@@ -3,7 +3,9 @@ namespace Graduation_Project.AdminRepository
 {
     public interface IAssignStudentsGroup 
     {
-       bool Add(StudentSubjectGroupTeacher model);
+        bool Add(Group group);
+       //bool Add(StudentSubjectGroupTeacher model);
+       //List<StudentSubjectGroupTeacher> GetAllStudents();
     }
 
 
@@ -14,15 +16,23 @@ namespace Graduation_Project.AdminRepository
         {
             db = _db;
         }
+        //public List<StudentSubjectGroupTeacher> GetAllStudents() 
+        //{
+        //    var studentsGroup = db.StudentsSubjectsGroupsTeachers.Where(s=>s.GroupId==1).ToList();
 
-        public bool Add(StudentSubjectGroupTeacher model) 
+        //    return studentsGroup;
+
+        //}
+
+        public bool Add(Group group)
         {
-            try 
+            try
             {
-                db.StudentsSubjectsGroupsTeachers.Add(model);
+                db.Groups.Add(group);
                 db.SaveChanges();
                 return true;
-            }catch(Exception e) 
+            }
+            catch (Exception e)
             {
                 return false;
             }

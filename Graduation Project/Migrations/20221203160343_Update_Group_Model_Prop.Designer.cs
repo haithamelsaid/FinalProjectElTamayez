@@ -4,6 +4,7 @@ using Graduation_Project.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Graduation_Project.Migrations
 {
     [DbContext(typeof(CenterDBContext))]
-    partial class CenterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221203160343_Update_Group_Model_Prop")]
+    partial class Update_Group_Model_Prop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -688,13 +690,11 @@ namespace Graduation_Project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Graduation_Project.Models.Group", "Group")
+                    b.HasOne("Graduation_Project.Models.Group", null)
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Account");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Graduation_Project.Models.Subject", b =>

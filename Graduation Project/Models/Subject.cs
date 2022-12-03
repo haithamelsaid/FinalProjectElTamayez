@@ -10,11 +10,10 @@ namespace Graduation_Project.Models
         public SubjectYear Year { get; set; }
         public string? Image { get; set; }
         public virtual List<Teacher>? Teachers { get; set; }
+        [ForeignKey("Group")]
+        public int? GrouId { get; set; }
+        public Group? Group { get; set; }
 
-
-        [ForeignKey("Admin")]
-        public int? AdminId { get; set; }
-        public Admin? Admin { get; set; }
     }
 
     public enum SubjectYear

@@ -1,5 +1,5 @@
 ﻿
-@model AssignStudentsGroupVM
+@model AddGroupStudentVM
 
 
 <link href="~/Admin/css/bootstrap-wysihtml5.css" rel="stylesheet">
@@ -47,7 +47,6 @@
                                 
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Group Name</label>
-                                    <input type="hidden" asp-for="GroupId" value="@Model.Group.Id"/>
                                     <div class="col-lg-10">
                                         <input asp-for="@Model.Group.Name" type="text" disabled placeholder="Please enter Name" class="form-control">
                                     </div>
@@ -65,11 +64,12 @@
                                     </div>
                                 </div>
                                 
+                                
 
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button asp-controller="AssignStudentsToGroup" asp-action="AssignStudentGroup" class="btn btn-info">
+                                        <button asp-route-id="@Model.Group.Id" class="btn btn-info">
                                             Save
                                         </button>
                                         <button asp-controller="#" asp-action="#" class="btn btn-danger">

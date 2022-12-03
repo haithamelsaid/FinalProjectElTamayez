@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Graduation_Project.Models;
-using Graduation_Project.ViewModels;
-using Graduation_Project.Areas.Admin.ViewModels;
 using Graduation_Project.AdminRepository;
+using Graduation_Project.Areas.Admin.ViewModels;
 namespace Graduation_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -10,56 +9,40 @@ namespace Graduation_Project.Areas.Admin.Controllers
     {
         IStudent istudent;
         IGroup igroup;
-        IAssignStudentsGroup iassign;
-        CenterDBContext db;
-        public AssignStudentsToGroupController(IStudent _istudent , IGroup _igroup , CenterDBContext _db, IAssignStudentsGroup _iassign)
+        public AssignStudentsToGroupController( IStudent _istudent,IGroup _igroup)
         {
             istudent = _istudent;
             igroup = _igroup;
-            db = _db;
-            iassign = _iassign;
         }
-        [HttpGet]
         public IActionResult AssignStudentGroup(int id)
         {
             List<Student> students = istudent.GetAllStudents();
             Group group = igroup.GetById(id);
-            AssignStudentsGroupVM assignStudentsGroup = new AssignStudentsGroupVM()
+            AddGroupStudentVM model = new AddGroupStudentVM()
             {
                 Students = students,
                 Group=group
             };
-            return View(assignStudentsGroup);
+            return View(model);
         }
         [HttpPost]
-        public IActionResult AssignStudentGroup(AssignStudentsGroupVM assignStudentsGroup)
+        public IActionResult AssignStudentGroup(AddGroupStudentVM addGroupStudentvm,int id) 
         {
-
-
-            StudentSubjectGroupTeacher model = new();
-
-            if (ModelState.IsValid == true)
+            Group group = igroup.GetById(id);
+            
+            
+            if (ModelState.IsValid) 
             {
-
-                for (int i = 0; i < assignStudentsGroup.MultiStudents.Length; i++)
+                foreach (var item in addGroupStudentvm.MultiStudents)
                 {
-                    model.GroupId = assignStudentsGroup.GroupId;
-
-                    model.StudentId = assignStudentsGroup.MultiStudents[i];
-                    model.TeacherId = 1;
-                    model.SubjectId = assignStudentsGroup.GroupId;
-                    
-                    iassign.Add(model);
-
+                    Student student = istudent.GetById(item);
+                    student.GroupId = group.Id;
+                    istudent.Edit(student);
                 }
-                return RedirectToAction("GetAllRegisteredStudents", "Register");
-            }
-            else
-            {
-                return View(model);
-
+                return RedirectToAction("Index","Home");
             }
 
+            return View(addGroupStudentvm);
         }
     }
 }

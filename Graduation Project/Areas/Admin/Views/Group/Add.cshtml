@@ -1,18 +1,12 @@
 ﻿
-@model Group
+@model Graduation_Project.Areas.Admin.ViewModels.AddGroupSubjectVM
 <link href="~/Admin/css/bootstrap-wysihtml5.css" rel="stylesheet">
 
 <link href="~/Admin/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
-
-
-
-
-
-
-
-    
-
+@{
+    SelectList items = new SelectList(Model.Subjects, "Id", "Name");
+}
 
     <div id="wrapper">
         <div class="content-wrapper container">
@@ -64,6 +58,13 @@
                                     <div class="col-lg-10">
                                         <input asp-for="CreationTime" type="date"  class="form-control">
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                        <select asp-items="items" asp-for="SubjectId" style="width:200px;" class="col-lg-10" >
+                                            <option value="0">
+                                                --Select Subject--
+                                            </option>
+                                        </select>
                                 </div>
 
 
