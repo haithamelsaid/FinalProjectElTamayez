@@ -1,4 +1,5 @@
 ﻿using Graduation_Project.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Graduation_Project.Repository
 {
@@ -21,7 +22,7 @@ namespace Graduation_Project.Repository
 
         public List<Comment> GetAllCommentsForPost(int postId)
         {
-            List<Comment> comments = db.Comments.Where(n => n.postid == postId).ToList();
+            List<Comment> comments = db.Comments.Include(c => c.Student).Where(n => n.postid == postId).ToList();
             return comments;
         }
 

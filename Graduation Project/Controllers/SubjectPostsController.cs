@@ -11,11 +11,13 @@ namespace Graduation_Project.Controllers
         IPostRepository postRepository;
         ICommentRepository comment;
         IHostingEnvironment hosting;
-        public SubjectPostsController(IPostRepository postRepository, ICommentRepository comment, IHostingEnvironment hosting)
+        CenterDBContext db;
+        public SubjectPostsController(IPostRepository postRepository, ICommentRepository comment, IHostingEnvironment hosting, CenterDBContext db)
         {
             this.postRepository = postRepository;
             this.comment = comment;
             this.hosting = hosting;
+            this.db = db;
         }
 
         public IActionResult Index(int id)
@@ -51,7 +53,9 @@ namespace Graduation_Project.Controllers
 
         public IActionResult SaveInsert(Post post, int groupId, IFormFile pic)
         {
-            post.StudentId = 2;
+            Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
+            Student s = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
+            post.StudentId = s.Id;
             post.GroupId = groupId;
             post.LikeCounter = 0;
             post.PostTime = DateTime.Now;
@@ -72,7 +76,23 @@ namespace Graduation_Project.Controllers
 
         public IActionResult insertComment(Comment c)
         {
-            c.StudentId = 2;
+            Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
+            if (User.IsInRole("Student") == true)
+            {
+                Student s = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
+                c.StudentId = s.Id;
+                c.Content += $"@@@{s.FirstName} {s.LastName}";
+            }
+            else if (User.IsInRole("Teacher") == true)
+            {
+                Teacher s = db.Teachers.SingleOrDefault(x => x.AccountId == AccountId.Id);
+                c.TeacherId = s.Id;
+                c.Content += $"@@@{s.FirstName} {s.LastName}";
+            }
+            else if (User.IsInRole("Admin") == true)
+            {
+                c.AdminId = 2;
+            }
             c.CommentTime = DateTime.Now;
             comment.InsertComment(c);
             return RedirectToAction(nameof(PostContent), new { id = c.postid });

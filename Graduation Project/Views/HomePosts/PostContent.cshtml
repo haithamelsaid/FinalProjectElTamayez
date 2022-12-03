@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "PostContent";
     var likes = Model.likes;
+    var comments = Model.comments;
     var comment = "";
     var name = "";
-    var comments = Model.comments;
 }
 <link rel="stylesheet" href="~/css/HomePostsSiteForNow.css" />
 
@@ -68,9 +68,8 @@
                                     <!-- comment & like bar -->
                                     <div class="d-flex justify-content-around">
                                         <button class="dropdown-item rounded d-flex justify-content-center align-items-center pointer text-muted p-1"
-                                        onclick="IncrementLikes(@likes , @Model.PostId)"
-                                        id="btn_like"
-                                        >
+                                                onclick="IncrementLikes(@likes , @Model.PostId)"
+                                                id="btn_like">
                                             <i id="like_logo" class="fas fa-thumbs-up me-3"></i>
                                             <p class="m-0">Like</p>
                                         </button>
@@ -91,7 +90,7 @@
                                         <hr />
                                         <div class="accordion-body">
                                             <!-- comment 1 -->
-                                            @for (var item = comments.Count - 1; item >= 0; --item)
+                                            @for (var item = comments.Count-1 ; item >= 0 ; --item)
                                             {
                                                 <div class="d-flex align-items-center my-1">
                                                     <!-- avatar -->
@@ -107,7 +106,7 @@
                                                                 name = comments[item].Content.Split("@@@")[1];
                                                             }
                                                             @name
-                                                        </p>
+                                                            </p>
                                                         <p class="fw-light m-0">@comments[item].CommentTime</p>
                                                         <p class="m-0 fs-7 bg-gray p-2 rounded">
                                                             @{
@@ -135,7 +134,7 @@
                                                 <input type="text" name="content"
                                                        class="form-control border-0 rounded-pill bg-gray"
                                                        placeholder="Write a comment" />
-                                                <input type="submit" value="Post" class="btn btn-primary ms-2"/>
+                                                <input type="submit" value="Post" class="btn btn-primary ms-2" />
                                             </form>
                                             <!-- end -->
                                         </div>
@@ -153,21 +152,20 @@
 
 <script src="~/js/site.js"></script>
 <script>
-    function IncrementLikes(likes , postId)
-    {
-        var like = likes + 1 ;
+    function IncrementLikes(likes, postId) {
+        var like = likes + 1;
         var postid = postId;
-        var likes_p = document.getElementById("likes_p") ;
+        var likes_p = document.getElementById("likes_p");
         var like_btn = document.getElementById("btn_like");
-        like_btn.disabled= true ;
+        like_btn.disabled = true;
         document.getElementById("like_logo").style.color = "blue";
         document.getElementById("like_logo").style.fontSize = "1.5em";
-            $.ajax({
-                url: "/SubjectPosts/IncrementLikeCounter" ,
-                data: { "id": postid }
-                , success: function (result) {
-                    likes_p.innerText = like + " Likes";
-                }
-            });
+        $.ajax({
+            url: "/HomePosts/IncrementLikeCounter",
+            data: { "id": postid }
+            , success: function (result) {
+                likes_p.innerText = like + " Likes";
+            }
+        });
     }
 </script>

@@ -7,6 +7,7 @@ public interface IPostRepository
 {
     List<Post> GetAllPosts();
     List<Post> GetAllPostsForAdmin();
+    Post getPostByIdForAdmin(int id);
     List<GetPost> GetPostForAdmin();
     List<GetPost> GetPostWithOwner();
     int DeletePost(int id);

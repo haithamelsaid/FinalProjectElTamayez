@@ -34,8 +34,45 @@ public class PostRepository : IPostRepository
             p.PostMakerName = db.Admins.Where(n => n.Id == item.AdminId).Select(n => n.Name).FirstOrDefault();
             p.PostDate = item.PostTime;
             p.PostMakerImage = null;
+            p.Image = item.Picture;
             p.Content = item.Content;
+            p.PostId = item.Id;
             postWithInfo.Add(p);
+        }
+        return postWithInfo;
+    }
+    public List<GetPost> getPostsForSubject(int id)
+    {
+        //@ get all posts for subject
+        List<Post> posts = db.Posts.Where(n => n.GroupId == id && n.AdminId == null).ToList();
+        // define posts which will be show at HomePost Page
+        List<GetPost> postWithInfo = new List<GetPost>();
+        // fill post with admin information
+        foreach (var item in posts)
+        {
+            GetPost p = new GetPost();
+            p.likes = item.LikeCounter;
+            p.PostDate = item.PostTime;
+            p.Content = item.Content;
+            p.PostId = item.Id;
+            p.Image = item.Picture;
+            if (item.StudentId != null)
+            {
+                Student s = db.Students.Where(n => n.Id == item.StudentId).SingleOrDefault();
+                p.PostMakerId = s.Id;
+                p.PostMakerName = s.FirstName + " " + s.LastName;
+                p.PostMakerImage = s.Picture;
+                postWithInfo.Add(p);
+            }
+
+            else if (item.TeacherId != null)
+            {
+                Teacher t = db.Teachers.Where(n => n.Id == item.TeacherId).SingleOrDefault();
+                p.PostMakerId = t.Id;
+                p.PostMakerName = t.FirstName + " " + t.LastName;
+                p.PostMakerImage = t.Picture;
+                postWithInfo.Add(p);
+            }
         }
         return postWithInfo;
     }
@@ -46,18 +83,6 @@ public class PostRepository : IPostRepository
         List<GetPost> postWithInfo = new List<GetPost>();
         foreach (var item in posts)
         {
-            /*if (item.AdminId != null)
-            {
-                GetPost p = new GetPost();
-                p.PostMakerId = db.Admins.Where(n => n.Id == item.AdminId).Select(n => n.Id).FirstOrDefault();
-                p.likes = item.LikeCounter;
-                p.PostMakerName = db.Admins.Where(n => n.Id == item.AdminId).Select(n => n.Name).FirstOrDefault();
-                p.PostDate = item.PostTime;
-                p.PostMakerImage = null;
-                p.Content = item.Content;
-                postWithInfo.Add(p);
-            }*/
-            //else if (item.StudentId != null)
             if (item.StudentId != null)
             {
                 GetPost p = new GetPost();
@@ -97,44 +122,12 @@ public class PostRepository : IPostRepository
         db.Posts.Add(post);
         return db.SaveChanges();
     }
-
-    public List<GetPost> getPostsForSubject(int id)
+    public Post getPostById(int id )
     {
-        //@ get all posts for subject
-        List<Post> posts = db.Posts.Where(n => n.GroupId == id && n.AdminId == null).ToList();
-        // define posts which will be show at HomePost Page
-        List<GetPost> postWithInfo = new List<GetPost>();
-        // fill post with admin information
-        foreach (var item in posts)
-        {
-            GetPost p = new GetPost();
-            p.likes = item.LikeCounter;
-            p.PostDate = item.PostTime;
-            p.Content = item.Content;
-            p.PostId = item.Id;
-            p.Image = item.Picture;
-            if (item.StudentId != null)
-            {
-                Student s = db.Students.Where(n => n.Id == item.StudentId).SingleOrDefault();
-                p.PostMakerId = s.Id;
-                p.PostMakerName = s.FirstName + " " + s.LastName;
-                p.PostMakerImage = s.Picture;
-                postWithInfo.Add(p);
-            }
-
-            else if (item.TeacherId != null)
-            {
-                Teacher t = db.Teachers.Where(n => n.Id == item.TeacherId).SingleOrDefault();
-                p.PostMakerId = t.Id;
-                p.PostMakerName = t.FirstName + " " + t.LastName;
-                p.PostMakerImage = t.Picture;
-                postWithInfo.Add(p);
-            }
-        }
-        return postWithInfo;
+        Post p = db.Posts.Include(n => n.Comments).Include(n => n.Student).Include(n => n.Teacher).SingleOrDefault(n => n.Id == id);
+        return p;
     }
-
-    public Post getPostById(int id)
+    public Post getPostByIdForAdmin(int id)
     {
         Post p = db.Posts.Include(n => n.Comments).Include(n => n.Student).Include(n => n.Teacher).SingleOrDefault(n => n.Id == id);
         return p;

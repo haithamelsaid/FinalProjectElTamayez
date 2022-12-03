@@ -12,5 +12,5 @@ public class GetPost
     public string Image { get; set; }
     public int likes { get; set; }
     public List<Comment> comments { get; set; }
-    public IFormFile File { get; set; }
+    //public IFormFile File { get; set; }
 }
