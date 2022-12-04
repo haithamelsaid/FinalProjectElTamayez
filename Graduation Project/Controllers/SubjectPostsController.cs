@@ -29,6 +29,9 @@ namespace Graduation_Project.Controllers
             ViewBag.groupdescription = db.Groups.SingleOrDefault(n => n.Id == id).Description;
             ViewBag.students = s;
             ViewBag.user = User.Identity.Name;
+            Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
+            Student student = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
+            ViewBag.studentImage = student.Picture;
             return View(p);
         }
 
