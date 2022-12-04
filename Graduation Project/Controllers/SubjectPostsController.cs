@@ -23,12 +23,16 @@ namespace Graduation_Project.Controllers
         public IActionResult Index(int id)
         {
             List<GetPost> p = postRepository.getPostsForSubject(id);
+            // send subject id for using at the post
             ViewBag.subjectId = id;
+            // the left side for the group name , description and enrolle dstudents at this subject
             List<Student> s = db.Students.Where(n => n.GroupId == id).ToList();
             ViewBag.groupname =db.Groups.SingleOrDefault(n => n.Id == id).Name;
             ViewBag.groupdescription = db.Groups.SingleOrDefault(n => n.Id == id).Description;
             ViewBag.students = s;
+            // user name 
             ViewBag.user = User.Identity.Name;
+            // get the student image to put it near to insert post 
             Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
             Student student = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
             ViewBag.studentImage = student.Picture;
@@ -37,7 +41,9 @@ namespace Graduation_Project.Controllers
 
         public IActionResult PostContent(int id)
         {
+            // get the selected post
             Post p = postRepository.getPostById(id);
+            // new object from get post viewModel to show the post and it content(post content , comments , likes and number of comments)
             GetPost post = new GetPost();
             post.PostId = p.Id;
             post.Content = p.Content;
@@ -45,12 +51,13 @@ namespace Graduation_Project.Controllers
             post.Image = p.Picture;
             post.comments = p.Comments;
             post.PostDate = p.PostTime;
-            if (p.Student != null)
+            //select the user info to show his data 
+            if (p.StudentId != null)
             {
                 post.PostMakerName = p.Student.FirstName + " " + p.Student.LastName;
                 post.PostMakerImage = p.Student.Picture;
             }
-            else if (p.Teacher != null)
+            else if (p.TeacherId != null)
             {
                 post.PostMakerName = p.Teacher.FirstName + " " + p.Teacher.LastName;
                 post.PostMakerImage = p.Teacher.Picture;
@@ -60,12 +67,15 @@ namespace Graduation_Project.Controllers
 
         public IActionResult SaveInsert(Post post, int groupId, IFormFile pic)
         {
+            // get the logged in student
             Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
             Student s = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
+            //  insert the related data for post
             post.StudentId = s.Id;
             post.GroupId = groupId;
             post.LikeCounter = 0;
             post.PostTime = DateTime.Now;
+            //check if user inserted a photo or not
             if (pic != null)
             {
                 //get images folder 
@@ -78,12 +88,15 @@ namespace Graduation_Project.Controllers
                 post.Picture = filename;
             }
             postRepository.Insert(post);
+            // return to the main page for this subject
             return RedirectToAction("Index", new { id = groupId });
         }
 
         public IActionResult insertComment(Comment c)
         {
+            // get the logged in user
             Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
+            // check the role of logged in user to insert his name to show it with comment
             if (User.IsInRole("Student") == true)
             {
                 Student s = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
@@ -104,7 +117,7 @@ namespace Graduation_Project.Controllers
             comment.InsertComment(c);
             return RedirectToAction(nameof(PostContent), new { id = c.postid });
         }
-
+        // increment the like counter for the post
         public void IncrementLikeCounter(int id)
         {
             Post p = postRepository.getPostById(id);

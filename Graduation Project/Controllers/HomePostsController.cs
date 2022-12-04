@@ -8,6 +8,7 @@ namespace Graduation_Project.Controllers
 {
     public class HomePostsController : Controller
     {
+        // injecting repos
         IPostRepository postRepository;
         ICommentRepository comment;
         IHostingEnvironment hosting;
@@ -19,9 +20,12 @@ namespace Graduation_Project.Controllers
             this.hosting = hosting;
             this.db = db;
         }
+        // show all posts from admin
         public IActionResult Index()
         {
+            // get all posts which admin has enrolled
             List<GetPost> posts = postRepository.GetPostForAdmin();
+            // get the admin name to show next 
             ViewBag.user = User.Identity.Name;
             return View(posts);
         }
@@ -49,6 +53,7 @@ namespace Graduation_Project.Controllers
         }
         public IActionResult PostContent(int id)
         {
+            // get the selected post to show its related data in a new page
             Post p = postRepository.getPostById(id);
             GetPost post = new GetPost();
             post.PostId = p.Id;
@@ -71,15 +76,18 @@ namespace Graduation_Project.Controllers
         }
         public IActionResult insertComment(Comment c)
         {
+            // get the loged in user by his unique name
             Account AccountId = db.Accounts.SingleOrDefault(a => a.UserName == LoginController.UserName);
             if (User.IsInRole("Student") == true)
             {
+                // get student id and name to show his info with comment
                 Student s = db.Students.SingleOrDefault(x => x.AccountId == AccountId.Id);
                 c.StudentId = s.Id;
                 c.Content += $"@@@{s.FirstName} {s.LastName}";
             }
             else if (User.IsInRole("Teacher") == true)
             {
+                // get teacher id and name to show his info with comment
                 Teacher s = db.Teachers.SingleOrDefault(x => x.AccountId == AccountId.Id);
                 c.TeacherId = s.Id;
                 c.Content += $"@@@{s.FirstName} {s.LastName}";
@@ -92,7 +100,7 @@ namespace Graduation_Project.Controllers
             comment.InsertComment(c);
             return RedirectToAction(nameof(PostContent), new { id = c.postid });
         }
-
+        // increment the like counter using ajax call
         public void IncrementLikeCounter(int id)
         {
             Post p = postRepository.getPostById(id);
